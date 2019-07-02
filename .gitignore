@@ -3,4 +3,6 @@
 
 # gen
 .vscode/
+.gradle
 build/
+.idea/
