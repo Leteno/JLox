@@ -78,6 +78,22 @@ public class Scanner {
                     while (peek() != '\n' && !isAtEnd()) {
                         advance();
                     }
+                } if (match('*')) {
+                    for (;;) {
+                        if (peek() == '*' && peekNext() == '/') {
+                            advance();
+                            advance();
+                            break;
+                        }
+                        if (peek() == '\n') {
+                            line++;
+                        }
+                        advance();
+                        if (isAtEnd()) {
+                            Lox.error(line, "expect */ at the end.");
+                            break;
+                        }
+                    }
                 } else {
                     addToken(SLASH);
                 }
