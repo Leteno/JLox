@@ -21,7 +21,19 @@ public class Parser {
     }
 
     private Expr expression() {
-        return equality();
+        return ternary();
+    }
+
+    private Expr ternary() {
+        Expr expr = equality();
+        if (peek().type == QUESTION) {
+            advance();
+            Expr firstValue = equality();
+            consume(TokenType.COLON, "Expect ':' after expression.");
+            Expr secondValue = equality();
+            expr = new Expr.Ternary(expr, firstValue, secondValue);
+        }
+        return expr;
     }
 
     private Expr equality() {
