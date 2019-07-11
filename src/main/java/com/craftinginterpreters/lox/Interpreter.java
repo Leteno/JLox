@@ -56,7 +56,7 @@ public class Interpreter implements Expr.Visitor<Object> {
                         "Operands must be two numbers or two strings.");
             case SLASH:
                 checkNumberOperands(expr.operator, left, right);
-                return (double)left - (double)right;
+                return (double)left / (double)right;
             case STAR:
                 checkNumberOperands(expr.operator, left, right);
                 return (double)left * (double)right;
