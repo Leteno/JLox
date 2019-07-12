@@ -30,6 +30,13 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     @Override
+    public Object visitAssignExpr(Expr.Assign expr) {
+        Object value = evaluate(expr.value);
+        environment.assign(expr.name, value);
+        return value;
+    }
+
+    @Override
     public Object visitTernaryExpr(Expr.Ternary expr) {
         if (isTruthy(evaluate(expr.compare))) {
             return evaluate(expr.valueOnTrue);
