@@ -1,6 +1,6 @@
 package com.craftinginterpreters.lox;
 
-public class AstPrinter implements Expr.Visitor<String> {
+public abstract class AstPrinter implements Expr.Visitor<String> {
     public static void main(String[] args) {
         Expr expression = new Expr.Binary(
                 new Expr.Unary(
@@ -9,7 +9,7 @@ public class AstPrinter implements Expr.Visitor<String> {
                 new Token(TokenType.STAR, "*", null, 1),
                 new Expr.Grouping(new Expr.Literal(45.97))
         );
-        System.out.println(new AstPrinter().print(expression));
+        //System.out.println(new AstPrinter().print(expression));
     }
 
     String print(Expr expr) {
