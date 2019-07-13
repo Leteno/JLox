@@ -7,7 +7,6 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     final Environment globals = new Environment();
     private Environment environment = globals;
-    private boolean breakState = false;
 
     Interpreter() {
         globals.define("clock", new LoxCallable() {
@@ -242,9 +241,6 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             this.environment = environment;
             for (Stmt statement : statements) {
                 execute(statement);
-                if (breakState) {
-                    return;
-                }
             }
         } finally {
             this.environment = previous;
@@ -302,19 +298,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitWhileStmt(Stmt.While stmt) {
-        while (isTruthy(evaluate(stmt.condition))) {
-            execute(stmt.body);
-            if (breakState) {
-                breakState = false;
-                break;
+        try {
+            while (isTruthy(evaluate(stmt.condition))) {
+                execute(stmt.body);
             }
+        } catch (Break breakStmt) {
+            // do nothing.
         }
         return null;
     }
 
     @Override
     public Void visitBreakStmt(Stmt.Break stmt) {
-        breakState = true;
-        return null;
+        throw new Break();
     }
 }
