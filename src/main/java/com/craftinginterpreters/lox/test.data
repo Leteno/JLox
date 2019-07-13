@@ -83,5 +83,5 @@ fun makePoint(x, y) {
 }
 
 var point = makePoint(2, 3);
-print point("x");
-print point("y");
+print point("x"); // 2.
+print point("y"); // 3.
