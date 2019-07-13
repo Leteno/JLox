@@ -37,5 +37,8 @@ while (i < 3) {
 }
 
 for (var a = 1; a < 4; a = a + 1) {
+    if (a == 2) break;
     print(a);
 }
+
+print("I am ok now.");

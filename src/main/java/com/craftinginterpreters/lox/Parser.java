@@ -62,6 +62,10 @@ public class Parser {
         if (match(LEFT_BRACE)) {
             return new Stmt.Block(block());
         }
+        if (match(BREAK)) {
+            consume(SEMICOLON, "Expect ';' after 'break'.");
+            return new Stmt.Break();
+        }
         return expressionStatement();
     }
 
