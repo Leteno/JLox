@@ -57,3 +57,31 @@ fun fibonacci(n) {
 for (var i = 0; i < 20; i = i + 1) {
     print fibonacci(i);
 }
+
+fun makeCounter() {
+  var i = 0;
+  fun count() {
+    i = i + 1;
+    print i;
+  }
+
+  return count;
+}
+
+var counter = makeCounter();
+counter();
+counter();
+
+fun makePoint(x, y) {
+  fun closure(method) {
+    if (method == "x") return x;
+    if (method == "y") return y;
+    print "unknown method " + method;
+  }
+
+  return closure;
+}
+
+var point = makePoint(2, 3);
+print point("x");
+print point("y");
