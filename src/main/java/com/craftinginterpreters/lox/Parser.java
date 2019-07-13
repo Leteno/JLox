@@ -8,6 +8,7 @@ import static com.craftinginterpreters.lox.TokenType.*;
 public class Parser {
     private final List<Token> tokens;
     private int current = 0;
+    private static final int MAX_PARAMETER_SIZE = 8;
 
     Parser(List<Token> tokens) {
         this.tokens = tokens;
@@ -24,6 +25,9 @@ public class Parser {
 
     private Stmt declaration() {
         try {
+            if (match(FUN)) {
+                return function("function");
+            }
             if (match(VAR)) {
                 return varDeclaration();
             }
@@ -32,6 +36,26 @@ public class Parser {
             syncronize();
             return null;
         }
+    }
+
+    private Stmt.Function function(String kind) {
+        Token name = consume(IDENTIFIER, "Expect " + kind + " name.");
+        consume(LEFT_PAREN, "Expect '(' after " + kind + " name.");
+        List<Token> parameters = new ArrayList<>();
+        if (!check(RIGHT_PAREN)) {
+            do {
+                if (parameters.size() >= MAX_PARAMETER_SIZE) {
+                    error(peek(), "Cannot have more than " + MAX_PARAMETER_SIZE + " parameters.");
+                }
+                parameters.add(consume(IDENTIFIER, "Expect parameter name."));
+            } while(match(COMMA));
+
+        }
+        consume(RIGHT_PAREN, "Expect ')' after parameters.");
+
+        consume(LEFT_BRACE, "Expect '}' before " + kind + " body.");
+        List<Stmt> body = block();
+        return new Stmt.Function(name, parameters, body);
     }
 
     private Stmt varDeclaration() {
@@ -314,8 +338,8 @@ public class Parser {
         List<Expr> arguments = new ArrayList<>();
         if (!check(RIGHT_PAREN)) {
             do {
-                if (arguments.size() >= 8) {
-                    error(peek(), "Cannot have more than 8 arguments.");
+                if (arguments.size() >= MAX_PARAMETER_SIZE) {
+                    error(peek(), "Cannot have more than " + MAX_PARAMETER_SIZE + " arguments.");
                 }
                 arguments.add(expression());
             } while (match(COMMA));
