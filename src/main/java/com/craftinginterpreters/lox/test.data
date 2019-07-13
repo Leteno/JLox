@@ -35,3 +35,7 @@ while (i < 3) {
     print(i);
     i = i + 1;
 }
+
+for (var a = 1; a < 4; a = a + 1) {
+    print(a);
+}
