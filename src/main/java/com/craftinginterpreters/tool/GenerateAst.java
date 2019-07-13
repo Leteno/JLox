@@ -76,11 +76,14 @@ public class GenerateAst {
 
         // Constructor.
         writer.println("    " + className + "(" + fieldList + ") {");
-        String[] fields = fieldList.split(", ");
-        for (String field : fields) {
-            String name = field.split(" ")[1];
-            writer.println("      this." + name + " = " + name + ";");
+        if (!"".equals(fieldList)) {
+            String[] fields = fieldList.split(", ");
+            for (String field : fields) {
+                String name = field.split(" ")[1];
+                writer.println("      this." + name + " = " + name + ";");
+            }
         }
+
         writer.println("    }");
 
         // Visitor pattern.
@@ -92,8 +95,11 @@ public class GenerateAst {
 
         // Fields
         writer.println();
-        for (String field : fields) {
-            writer.println("    final " + field + ";");
+        if (!"".equals(fieldList)) {
+            String[] fields = fieldList.split(", ");
+            for (String field : fields) {
+                writer.println("    final " + field + ";");
+            }
         }
 
         writer.println("  }");
