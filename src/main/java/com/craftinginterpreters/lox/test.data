@@ -86,7 +86,11 @@ var point = makePoint(2, 3);
 print point("x"); // 2.
 print point("y"); // 3.
 
+/*
 fun bad() {
     var a = "first";
     var a = "second";
 }
+*/
+
+return "at top level";
