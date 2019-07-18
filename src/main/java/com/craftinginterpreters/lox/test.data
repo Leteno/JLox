@@ -93,4 +93,14 @@ fun bad() {
 }
 */
 
+/*
 return "at top level";
+*/
+
+class DevonshireCream {
+  serveOn() {
+    return "Scones";
+  }
+}
+
+print DevonshireCream; // Prints "DevonshireCream".
