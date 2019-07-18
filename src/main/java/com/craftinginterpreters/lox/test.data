@@ -126,4 +126,14 @@ class Egotist {
 var method = Egotist().speak;
 method();
 
+/*
 print this;
+*/
+
+class Foo {
+  init() {
+    print this;
+  }
+}
+
+var foo = Foo();
