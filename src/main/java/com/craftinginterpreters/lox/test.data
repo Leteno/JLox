@@ -125,3 +125,5 @@ class Egotist {
 
 var method = Egotist().speak;
 method();
+
+print this;
